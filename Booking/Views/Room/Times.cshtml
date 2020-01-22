@@ -1,0 +1,25 @@
+﻿@using Booking.Entity
+@using Booking.Types;
+@model Room
+<center>
+    <h4>Hour</h4>
+</center>
+<ul>
+@foreach (RoomDetailTime time in ViewBag.times)
+{
+    <li>
+        @if (time.available)
+        {
+            <input type="radio" value="@time.value" name="hour" id="@time.value" class="hour-select">
+            <label for="@time.value" class="hour-select">@time.value</label>
+
+        }
+        else
+        {
+            <input type="radio" value="@time.value" name="hour" id="@time.value" disabled="disabled">
+            <label for="@time.value" class="hour-select"><strike>@time.value</strike></label>
+        }
+
+    </li>
+}
+</ul>

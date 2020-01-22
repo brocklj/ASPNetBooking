@@ -1,0 +1,23 @@
+﻿@using Booking.Entity
+@model IList<Room>
+
+<h3>Rooms</h3>
+<ul>
+    @foreach (Room room in Model)
+    {
+    <li class="room">
+        <h4>@room.Name</h4>
+         @if (room.Description.Length > 200)
+        {
+           <p>Description: @room.Description.Substring(0, 198) </p>
+        }
+         else
+         {
+           <p>@room.Description</p>
+        }
+        <p>Open from: @room.OpenFrom o'clock</p>
+        <p>Open till: @room.OpenTill o'clock</p>
+        @Html.ActionLink("Book Now!", "Detail", new { id = room.RoomId })
+    </li>
+    }
+</ul>

@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewData["Title"] = "Create";
+}
+@using Booking.Entity
+@model Reservation
+<h3>New Reservation</h3>
+<p>Room: @TempData["RoomName"]</p>
+<p>Date: @TempData["Date"]</p>
+<p>Time: @TempData["Hours"]</p>
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.Hidden("Date", TempData["Date"])
+    @Html.Hidden("Hours", TempData["Hours"])
+    @Html.Hidden("RoomId", TempData["RoomId"])
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.EditorFor(m => m.Email)
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName)
+        @Html.EditorFor(m => m.FirstName)
+        @Html.ValidationMessageFor(m => m.FirstName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName)
+        @Html.EditorFor(m => m.LastName)
+        @Html.ValidationMessageFor(m => m.LastName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ContactNumber)
+        @Html.EditorFor(m => m.ContactNumber)
+        @Html.ValidationMessageFor(m => m.ContactNumber)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Note)
+        @Html.TextAreaFor(m => m.Note)
+        @Html.ValidationMessageFor(m => m.Note)
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" />
+    </div>
+}
+<div style="float: left; clear: both;">
+    @Html.ActionLink("Cancel", "Index", "Room")
+</div>
+@section Scripts {
+    <script>
+        $(function () {
+
+            $("[name='ContactNumber']").on("keyup", function () {
+                var value = $(this).val();
+                value = value.toString().replace("+", "");
+                console.log(value.length);
+                if (value.length && value.length == 3 || value.length == 7 || value.length == 11) {
+                    value = value + " ";
+                }
+                $(this).val("+" + value);
+            });
+
+        });
+
+    </script>
+}

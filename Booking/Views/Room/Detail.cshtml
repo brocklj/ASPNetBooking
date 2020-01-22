@@ -1,0 +1,51 @@
+﻿@using Booking
+@using Booking.Controllers
+@using Booking.Models
+@using Booking.Entity
+@model ReservationTimeSelectModel
+
+<h3>Booking for room: @Model.Room.Name</h3>
+<p>Room description: @Model.Room.Description</p>
+
+
+@using (Html.BeginForm())
+{
+    <input type="hidden" name="room" value="@Model.Room.RoomId" />
+    <div>
+        <aside style="float: left;">
+            <input id="DateSelect" name="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" type="Date" />
+            @Html.ValidationMessageFor(m => m.date)
+        </aside>        
+        <aside id="TimeBlock" style="float: left;"></aside>
+        @Html.ValidationMessageFor(m => m.hour)
+    </div>
+    <div class="form-group" style="float: right; clear: both;">
+        <input  type="submit" disabled="disabled" value="Next" class="reservation-time-select-submit"/>
+    </div>
+}
+
+<div style="float: left; clear: both;">
+    @Html.ActionLink("Back", "Index")
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            loadTimeBlock($("#DateSelect").val());
+            $("#DateSelect").on("change", function (event) {
+                loadTimeBlock(event.target.value);
+            });
+
+            $(document).on("click", ".hour-select" ,function () {
+                $(".reservation-time-select-submit").removeAttr("disabled");
+            });
+
+
+        });
+
+        function loadTimeBlock(value) {
+            $('#TimeBlock').load('/Room/Times/', { Date: value, RoomId: @Model.Room.RoomId});
+        };
+
+    </script>
+}
